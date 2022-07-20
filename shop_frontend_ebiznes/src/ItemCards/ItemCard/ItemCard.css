@@ -1,0 +1,32 @@
+img {
+    width: 130px;
+    height: 130px;
+
+}
+
+.item-card {
+    display: flex;
+    flex-direction: row;
+    /*justify-content: space-between;*/
+    align-items: center;
+    background-color: floralwhite;
+    margin-bottom: 15px;
+}
+
+.description {
+    margin-left: 10px;
+}
+
+.right-side {
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+.add-to-cart-button {
+    margin-top: 10px;
+    background-color: palevioletred;
+    height: 40px;
+
+}
+
+

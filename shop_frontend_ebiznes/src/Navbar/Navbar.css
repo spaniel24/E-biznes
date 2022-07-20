@@ -1,0 +1,22 @@
+.navbar {
+    display: flex;
+    background-color: rosybrown;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    align-items: center;
+}
+
+.title {
+    font-family: "Freestyle Script", serif;
+    font-size: 35px;
+}
+
+.cart {
+    padding: 10px;
+    margin-right: 15px;
+    width: 50px;
+
+    /*width: 0.5rem;*/
+}

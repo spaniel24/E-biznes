@@ -1,0 +1,16 @@
+.website {
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+}
+
+.website-middle {
+    z-index: 100;
+    background-color: mistyrose;
+    padding-left: 1%;
+    padding-right: 3%;
+    margin-right: 18%;
+    margin-left: 18%;
+    display: flex;
+    flex-direction: row;
+}

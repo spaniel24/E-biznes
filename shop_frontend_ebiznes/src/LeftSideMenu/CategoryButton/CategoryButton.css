@@ -1,0 +1,22 @@
+.category-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    border-bottom-style: groove;
+    border-bottom-width: thin;
+    padding-bottom: 10px
+}
+
+.no-style-button {
+    width: 100%;
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+}
