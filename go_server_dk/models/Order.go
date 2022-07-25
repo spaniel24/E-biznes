@@ -6,6 +6,6 @@ type Order struct {
 	gorm.Model
 	OrderProducts []Product
 	Price         int
-	UserId        int
+	UserId        string
 	Status        string
 }

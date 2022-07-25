@@ -26,13 +26,17 @@ func initRouting() *echo.Echo {
 	e.PUT("/categories/:id", api.UpdateCategory)
 	e.DELETE("/categories", api.DeleteCategory)
 
-	e.POST("/payments", api.RegisterPayment)
+	e.POST("/payments", api.PayForOrder)
 
 	e.POST("/register", api.RegisterUser)
 	e.GET("/login", api.Login)
 	e.GET("/logout", api.Logout)
 
 	e.POST("/order", api.CreateOrder)
-	e.GET("/order/:id", api.PayForOrder)
+
+	e.GET("/oauth/login/:client", api.OauthLoginUrl)
+	e.GET("/github/callback", api.OauthCallbackGithub)
+	e.GET("/gogcall", api.OauthCallbackGoogle)
+	e.GET("/facebook", api.OauthCallbackFacebook)
 	return e
 }
