@@ -198,7 +198,7 @@ func OauthCallbackGithub(c echo.Context) error {
 	}
 
 	//Redirect the user to the home page with acces token as query param
-	return c.Redirect(http.StatusFound, "http://localhost:3000?user_token="+userToken.String())
+	return c.Redirect(http.StatusFound, "https://shopworking.azurewebsites.net?user_token="+userToken.String())
 }
 
 func OauthCallbackFacebook(c echo.Context) error {
@@ -255,7 +255,7 @@ func OauthCallbackFacebook(c echo.Context) error {
 		db.Save(&user)
 	}
 
-	return c.Redirect(http.StatusFound, "http://localhost:3000?user_token="+userToken.String())
+	return c.Redirect(http.StatusFound, "https://shopworking.azurewebsites.net?user_token="+userToken.String())
 }
 
 func OauthCallbackGoogle(c echo.Context) error {
@@ -311,5 +311,5 @@ func OauthCallbackGoogle(c echo.Context) error {
 		db.Save(&user)
 	}
 
-	return c.Redirect(http.StatusFound, "http://localhost:3000?user_token="+userToken.String())
+	return c.Redirect(http.StatusFound, "https://shopworking.azurewebsites.net?user_token="+userToken.String())
 }
