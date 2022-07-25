@@ -11,7 +11,7 @@ const PaymentModal = ({onClose}) => {
     const handleSubmit = () => {
         setWaiting(true);
         const urlParams = new URLSearchParams(window.location.search);
-        axios.post(`https://shopworkingbackend.azurewebsites.net/payments?user_token=${urlParams.get('user_token')}`).then(() => {
+        axios.post(`https://shopworkingbackend.azurewebsites.net:8080/payments?user_token=${urlParams.get('user_token')}`).then(() => {
             alert('Payment has ended successfully, come again!')
             setWaiting(false);
             cleanBasket();

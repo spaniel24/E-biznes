@@ -18,7 +18,7 @@ function App() {
 
     const fetchCategories = useCallback(
         () => {
-            axios.get('https://shopworkingbackend.azurewebsites.net/categories').then(res => {
+            axios.get('https://shopworkingbackend.azurewebsites.net:8080/categories').then(res => {
                 console.log(res.data)
                 setCategories(res.data)
             })

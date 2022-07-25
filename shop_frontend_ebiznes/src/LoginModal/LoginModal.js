@@ -4,18 +4,18 @@ import axios from "axios";
 const LoginModal = ({onClose})=>{
 
     const handleGithubLogin = () => {
-        axios.get('https://shopworkingbackend.azurewebsites.net/oauth/login/github').then((data) => {
+        axios.get('https://shopworkingbackend.azurewebsites.net:8080/oauth/login/github').then((data) => {
             window.open(data.data, '_self', 'noopener,noreferrer');
         })
     }
     const handleGoogleLogin = () => {
-        axios.get('https://shopworkingbackend.azurewebsites.net/oauth/login/google').then((data) => {
+        axios.get('https://shopworkingbackend.azurewebsites.net:8080/oauth/login/google').then((data) => {
             window.open(data.data, '_self', 'noopener,noreferrer');
         })
     }
 
     const handleFacebookLogin = () => {
-        axios.get('https://shopworkingbackend.azurewebsites.net/oauth/login/facebook').then((data) => {
+        axios.get('https://shopworkingbackend.azurewebsites.net:8080/oauth/login/facebook').then((data) => {
             window.open(data.data, '_self', 'noopener,noreferrer');
         })
     }
