@@ -11,7 +11,7 @@ const ItemCards = ({category}) => {
 
     const fetchItems = useCallback(
         () => {
-            axios.get(`http://shopworkingbackend.azurewebsites.net/products?category=${category}`).then(res => {
+            axios.get(`https://shopworkingbackend.azurewebsites.net/products?category=${category}`).then(res => {
                 setItems(res.data)
             })
         }, [category]);

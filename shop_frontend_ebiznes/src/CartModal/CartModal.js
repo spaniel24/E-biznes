@@ -30,7 +30,7 @@ const CartModal = ({onClose, setShowingPaymentModal}) => {
 
     const onPay = () => {
         const urlParams = new URLSearchParams(window.location.search);
-        axios.post(`http://shopworkingbackend.azurewebsites.net/order?user_token=${urlParams.get('user_token')}`, {
+        axios.post(`https://shopworkingbackend.azurewebsites.net/order?user_token=${urlParams.get('user_token')}`, {
             Price: getCartTotalPrice(),
             OrderProducts: getCartItemsList(),
             Status: 'Ready to pay'
