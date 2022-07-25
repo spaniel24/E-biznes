@@ -15,22 +15,26 @@ env:
 
 jobs:
   build:
-    runs-on: 'ubuntu-latest'
-
+    name: Build and Test
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
     defaults:
       run:
         working-directory: shop_frontend_ebiznes
     steps:
-    - uses: actions/checkout@v2
-        
-    - name: Login Docker
+      - name: Checkout current branch (full)
+        uses: actions/checkout@v2
+
+      - name: Login Docker
         run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 
-    - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag matthmul/node:${{ github.sha }}
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag spaniel24/shop_frontend:${{ github.sha }}
 
-    - name: Docker Push
-        run: docker push matthmul/node:${{ github.sha }}
+      - name: Docker Push
+        run: docker push spaniel24/shop_frontend:${{ github.sha }}
 
   deploy:
     runs-on: ubuntu-latest
@@ -54,4 +58,4 @@ jobs:
         app-name: 'shopWorking'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_ee80c2a73f614eeda0985057981887db }}
-        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_276dd9ed5d4946e39ea1643a42f67fcf }}/spaniel24/shop_frontend:${{ github.sha }}'
+        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_276dd9ed5d4946e39ea1643a42f67fcf }}/shop_frontend:${{ github.sha }}'
