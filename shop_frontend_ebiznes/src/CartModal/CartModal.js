@@ -1,5 +1,6 @@
 import './CartModal.css'
 import useLocalStorageCart from "../hooks/useLocalStorageCart";
+import axios from "axios";
 
 const CartModal = ({onClose, setShowingPaymentModal}) => {
     // return ReactDOM.createPortal(
@@ -12,7 +13,7 @@ const CartModal = ({onClose, setShowingPaymentModal}) => {
                 id += 1;
                 return (
                     <li key={id}>
-                        <span>{cartItemsObject.name}, {cartItemsObject.price} zł</span>
+                        <span>{cartItemsObject.Name}, {cartItemsObject.Price} zł</span>
                     </li>
                 )
             }
@@ -22,14 +23,24 @@ const CartModal = ({onClose, setShowingPaymentModal}) => {
     const getCartTotalPrice = () => {
         let totalPrice = 0;
         cartItems.forEach(cartItem => {
-            totalPrice = totalPrice + cartItem.price;
+            totalPrice = totalPrice + cartItem.Price;
         })
         return totalPrice;
     }
 
     const onPay = () => {
-        setShowingPaymentModal(true);
-        onClose();
+        const urlParams = new URLSearchParams(window.location.search);
+        axios.post(`http://localhost:8080/order?user_token=${urlParams.get('user_token')}`, {
+            Price: getCartTotalPrice(),
+            OrderProducts: getCartItemsList(),
+            Status: 'Ready to pay'
+        }).then((res) => {
+            console.log(res)
+            setShowingPaymentModal(true);
+            onClose();
+        }).catch(()=>{
+            alert("You need to login before making order")
+        })
     }
 
     return (

@@ -6,6 +6,7 @@ import {useCallback, useEffect, useState} from "react";
 import axios from 'axios'
 import CartModal from "./CartModal/CartModal";
 import PaymentModal from "./PaymentModal/PaymentModal";
+import LoginModal from "./LoginModal/LoginModal";
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
     const [selectedCategory, setSelectedCategory] = useState('');
     const [showingOpenModal, setShowingOpenModal] = useState(false);
     const [showingPaymentModal, setShowingPaymentModal] = useState(false);
+    const [showingLoginModal, setShowingLoginModal] = useState(false);
 
     const fetchCategories = useCallback(
         () => {
@@ -46,13 +48,24 @@ function App() {
         return null;
     }
 
+    const renderLoginModal = () => {
+        if (showingLoginModal) {
+            return (
+                <LoginModal onClose={()=>setShowingLoginModal(false)}/>
+            )
+        }
+
+        return null;
+    }
+
     return (
         <>
             {renderCartModal()}
             {renderPaymentModal()}
+            {renderLoginModal()}
             <div className="website">
                 <div className="website-top">
-                    <Navbar showCartModal={() => setShowingOpenModal(true)}/>
+                    <Navbar showCartModal={() => setShowingOpenModal(true)} showLoginModal={()=>setShowingLoginModal(true)}/>
                 </div>
                 <div className="website-middle">
                     <LeftSideMenu categories={categories} categoryCallback={category => setSelectedCategory(category)}/>

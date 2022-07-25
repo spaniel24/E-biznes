@@ -35,7 +35,12 @@ const useLocalStorageCart = () => {
         return 0;
     }
 
-    return {cartItems, addItemToCart, setCartState};
+    const cleanBasket = () => {
+        setStoredValue([]);
+        localStorage.setItem("spaniel_shopping_cart", null)
+    }
+
+    return {cartItems, addItemToCart, setCartState, cleanBasket};
 }
 
 export default useLocalStorageCart;

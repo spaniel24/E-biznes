@@ -1,16 +1,20 @@
 import './PaymentModal.css'
 import {useState} from "react";
 import axios from "axios";
+import useLocalStorageCart from "../hooks/useLocalStorageCart";
 
 const PaymentModal = ({onClose}) => {
     const [creditCardNumber, setCreditCardNumber] = useState('');
     const [waiting, setWaiting] = useState(false);
+    const {cleanBasket} = useLocalStorageCart();
 
     const handleSubmit = () => {
         setWaiting(true);
-        axios.post('http://localhost:8080/payments').then(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        axios.post(`http://localhost:8080/payments?user_token=${urlParams.get('user_token')}`).then(() => {
             alert('Payment has ended successfully, come again!')
             setWaiting(false);
+            cleanBasket();
             onClose();
         })
     };
