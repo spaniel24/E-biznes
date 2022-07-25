@@ -23,7 +23,7 @@ func OauthConfigGoogle() *oauth2.Config {
 		ClientSecret: "",
 		Endpoint:     google.Endpoint,
 		Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"},
-		RedirectURL:  "http://localhost:8080/gogcall",
+		RedirectURL:  "https://shopworkingbackend.azurewebsites.net/gogcall",
 	}
 
 	return oauthConfig
@@ -37,7 +37,7 @@ func OauthConfigGithub() *oauth2.Config {
 		ClientSecret: "",
 		Endpoint:     github.Endpoint,
 		Scopes:       []string{"user:email", "read:user"},
-		RedirectURL:  "http://localhost:8080/github/callback",
+		RedirectURL:  "https://shopworkingbackend.azurewebsites.net/github/callback",
 	}
 
 	return oauthConfig
@@ -58,7 +58,7 @@ func OauthConfigFacebook() *oauth2.Config {
 		ClientID:     "1686548605061476",
 		ClientSecret: "",
 		Endpoint:     facebook.Endpoint,
-		RedirectURL:  "http://localhost:8080/facebook",
+		RedirectURL:  "https://shopworkingbackend.azurewebsites.net/facebook",
 	}
 
 	return FACEBOOK
