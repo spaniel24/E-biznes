@@ -20,7 +20,7 @@ func OauthConfigGoogle() *oauth2.Config {
 	//Provide default configuration for oauth provider
 	oauthConfig := &oauth2.Config{
 		ClientID:     "990086985811-74dk6oh85ug8edl7hdmddeceqpgfc1f7.apps.googleusercontent.com",
-		ClientSecret: "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",
+		ClientSecret: "",
 		Endpoint:     google.Endpoint,
 		Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"},
 		RedirectURL:  "http://localhost:8080/gogcall",
@@ -34,7 +34,7 @@ func OauthConfigGithub() *oauth2.Config {
 	//Provide default configuration for oauth provider
 	oauthConfig := &oauth2.Config{
 		ClientID:     "3c972fdd817210dff2da",
-		ClientSecret: "7b5e323e396a431b48355801ad05b21c0e5b7b77",
+		ClientSecret: "",
 		Endpoint:     github.Endpoint,
 		Scopes:       []string{"user:email", "read:user"},
 		RedirectURL:  "http://localhost:8080/github/callback",
@@ -56,7 +56,7 @@ func OauthConfigFacebook() *oauth2.Config {
 
 	var FACEBOOK = &oauth2.Config{
 		ClientID:     "1686548605061476",
-		ClientSecret: "683a5341676d883707d7feec31feef5b",
+		ClientSecret: "",
 		Endpoint:     facebook.Endpoint,
 		RedirectURL:  "http://localhost:8080/facebook",
 	}
