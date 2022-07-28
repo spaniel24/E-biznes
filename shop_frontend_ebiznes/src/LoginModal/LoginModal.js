@@ -20,11 +20,18 @@ const LoginModal = ({onClose})=>{
         })
     }
 
+    const handleLinkedinLogin = () => {
+        axios.get('https://shopworkingbackend.azurewebsites.net/oauth/login/linkedin').then((data) => {
+            window.open(data.data, '_self', 'noopener,noreferrer');
+        })
+    }
+
     return (
         <div className="payment-modal">
             <button onClick={handleGithubLogin}>Github</button>
             <button onClick={handleGoogleLogin}>Google</button>
             <button onClick={handleFacebookLogin}>Facebook</button>
+            <button onClick={handleLinkedinLogin}>Linkedin</button>
         </div>
     )
 }
