@@ -32,6 +32,7 @@ const LoginModal = ({onClose})=>{
             <button onClick={handleGoogleLogin}>Google</button>
             <button onClick={handleFacebookLogin}>Facebook</button>
             <button onClick={handleLinkedinLogin}>Linkedin</button>
+            <button onClick={onClose}>Cancel</button>
         </div>
     )
 }

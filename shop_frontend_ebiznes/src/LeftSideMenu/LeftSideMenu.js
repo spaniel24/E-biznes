@@ -1,5 +1,5 @@
 import './LeftSideMenu.css'
-import CategoryButton from "./CategoryButton/CattegoryButton";
+import CategoryButton from "./CategoryButton/CategoryButton";
 
 const LeftSideMenu = ({categories, categoryCallback}) => {
 

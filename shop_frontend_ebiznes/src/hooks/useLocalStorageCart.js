@@ -29,12 +29,6 @@ const useLocalStorageCart = () => {
         })
     }
 
-    const getTotalPrice = () => {
-        const savedValue = JSON.parse(localStorage.getItem("spaniel_shopping_cart_price"));
-        if(savedValue) return savedValue;
-        return 0;
-    }
-
     const cleanBasket = () => {
         setStoredValue([]);
         localStorage.setItem("spaniel_shopping_cart", null)
