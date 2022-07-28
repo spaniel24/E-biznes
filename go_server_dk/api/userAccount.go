@@ -13,14 +13,15 @@ import (
 	"golang.org/x/oauth2/google"
 	"io/ioutil"
 	"net/http"
+	"os"
 )
 
 func OauthConfigGoogle() *oauth2.Config {
 
 	//Provide default configuration for oauth provider
 	oauthConfig := &oauth2.Config{
-		ClientID:     "990086985811-74dk6oh85ug8edl7hdmddeceqpgfc1f7.apps.googleusercontent.com",
-		ClientSecret: "",
+		ClientID:     os.Getenv("GOOGLE_CLIENT_ID"),
+		ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
 		Endpoint:     google.Endpoint,
 		Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"},
 		RedirectURL:  "https://shopworkingbackend.azurewebsites.net/gogcall",
@@ -33,8 +34,8 @@ func OauthConfigGithub() *oauth2.Config {
 
 	//Provide default configuration for oauth provider
 	oauthConfig := &oauth2.Config{
-		ClientID:     "3c972fdd817210dff2da",
-		ClientSecret: "",
+		ClientID:     os.Getenv("GITHUB_CLIENT_ID"),
+		ClientSecret: os.Getenv("GITHUB_CLIENT_SECRET"),
 		Endpoint:     github.Endpoint,
 		Scopes:       []string{"user:email", "read:user"},
 		RedirectURL:  "https://shopworkingbackend.azurewebsites.net/github/callback",
@@ -55,8 +56,8 @@ func OauthConfigFacebook() *oauth2.Config {
 	//}
 
 	var FACEBOOK = &oauth2.Config{
-		ClientID:     "1686548605061476",
-		ClientSecret: "",
+		ClientID:     os.Getenv("FACEBOOK_APP_ID"),
+		ClientSecret: os.Getenv("FACEBOOK_APP_SECRET"),
 		Endpoint:     facebook.Endpoint,
 		RedirectURL:  "https://shopworkingbackend.azurewebsites.net/facebook",
 	}
