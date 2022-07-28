@@ -38,5 +38,6 @@ func initRouting() *echo.Echo {
 	e.GET("/github/callback", api.OauthCallbackGithub)
 	e.GET("/gogcall", api.OauthCallbackGoogle)
 	e.GET("/facebook", api.OauthCallbackFacebook)
+	e.GET("/linkedin", api.OauthCallbackLinkedin)
 	return e
 }

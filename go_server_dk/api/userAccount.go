@@ -11,6 +11,7 @@ import (
 	"golang.org/x/oauth2/facebook"
 	"golang.org/x/oauth2/github"
 	"golang.org/x/oauth2/google"
+	"golang.org/x/oauth2/linkedin"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -39,6 +40,20 @@ func OauthConfigGithub() *oauth2.Config {
 		Endpoint:     github.Endpoint,
 		Scopes:       []string{"user:email", "read:user"},
 		RedirectURL:  "https://shopworkingbackend.azurewebsites.net/github/callback",
+	}
+
+	return oauthConfig
+}
+
+func OauthConfigLinkedin() *oauth2.Config {
+
+	//Provide default configuration for oauth provider
+	oauthConfig := &oauth2.Config{
+		ClientID:     os.Getenv("LINKEDIN_CLIENT_ID"),
+		ClientSecret: os.Getenv("LINKEDIN_CLIENT_SECRET"),
+		Endpoint:     linkedin.Endpoint,
+		RedirectURL:  "https://shopworkingbackend.azurewebsites.net/linkedin",
+		Scopes:       []string{"r_liteprofile", "r_emailaddress"},
 	}
 
 	return oauthConfig
@@ -78,6 +93,10 @@ func OauthLoginUrl(c echo.Context) error {
 	}
 	if client == "facebook" {
 		oauthUrl := OauthConfigFacebook().AuthCodeURL("state")
+		return c.JSON(http.StatusOK, oauthUrl)
+	}
+	if client == "linkedin" {
+		oauthUrl := OauthConfigLinkedin().AuthCodeURL("state")
 		return c.JSON(http.StatusOK, oauthUrl)
 	}
 
@@ -305,6 +324,63 @@ func OauthCallbackGoogle(c echo.Context) error {
 		//If user exists refresh access token
 		user := models.User{}
 		db.Where("username = ?", userDataStruct.Email).Find(&user)
+
+		user.OauthKey = oauthToken.AccessToken
+		user.UserKey = userToken.String()
+
+		db.Save(&user)
+	}
+
+	return c.Redirect(http.StatusFound, "https://shopworking.azurewebsites.net?user_token="+userToken.String())
+}
+
+func OauthCallbackLinkedin(c echo.Context) error {
+	oauthToken, err := OauthConfigLinkedin().Exchange(context.Background(), c.QueryParam("code"))
+	if err != nil {
+		return c.NoContent(http.StatusInternalServerError)
+	}
+
+	userRequest, err := http.NewRequest("GET", "https://api.linkedin.com/v2/me?oauth2_access_token="+oauthToken.AccessToken, nil)
+	userRequest.Header.Add("Authorization", oauthToken.AccessToken)
+	if err != nil {
+		return c.NoContent(http.StatusBadRequest)
+	}
+
+	userResponse, err := http.DefaultClient.Do(userRequest)
+	if err != nil {
+		return c.NoContent(http.StatusInternalServerError)
+	}
+
+	defer userResponse.Body.Close()
+	userData, err := ioutil.ReadAll(userResponse.Body)
+	userDataString := string(userData)
+	println(userDataString)
+
+	if err != nil {
+		return c.NoContent(http.StatusInternalServerError)
+	}
+	userDataStruct := struct {
+		Id string
+	}{}
+
+	//Convert user data json to temporary struct
+	json.Unmarshal([]byte(userDataString), &userDataStruct)
+	userToken := uuid.New()
+	db := databases.GetDatabase()
+	println(userDataStruct.Id)
+	if !UserInDatabase(userDataStruct.Id) {
+
+		internalUser := models.User{}
+		internalUser.Username = userDataStruct.Id
+		internalUser.OauthKey = oauthToken.AccessToken
+		internalUser.UserKey = userToken.String()
+
+		db.Create(&internalUser)
+	} else {
+
+		//If user exists refresh access token
+		user := models.User{}
+		db.Where("username = ?", userDataStruct.Id).Find(&user)
 
 		user.OauthKey = oauthToken.AccessToken
 		user.UserKey = userToken.String()
