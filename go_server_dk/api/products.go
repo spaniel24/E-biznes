@@ -25,7 +25,7 @@ func GetProduct(c echo.Context) error {
 	id := c.Param("id")
 	db := databases.GetDatabase()
 	var product models.Product
-	db.First(&product, "ID = ?", id)
+	db.First(&product, idQuery, id)
 	return c.JSON(http.StatusOK, product)
 }
 
@@ -44,7 +44,7 @@ func UpdateProduct(c echo.Context) error {
 	c.Bind(product)
 	db := databases.GetDatabase()
 	var oldProduct models.Product
-	db.First(&oldProduct, "ID = ?", id)
+	db.First(&oldProduct, idQuery, id)
 	oldProduct.Name = product.Name
 	oldProduct.Description = product.Description
 	oldProduct.Category = product.Category
@@ -59,6 +59,6 @@ func DeleteProduct(c echo.Context) error {
 	id := c.Param("id")
 	db := databases.GetDatabase()
 	var product models.Product
-	db.Delete(&product, "ID = ?", id)
+	db.Delete(&product, idQuery, id)
 	return c.JSON(http.StatusOK, product)
 }

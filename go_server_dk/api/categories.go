@@ -7,6 +7,8 @@ import (
 	"net/http"
 )
 
+var idQuery = "ID = ?"
+
 func GetCategories(c echo.Context) error {
 
 	db := databases.GetDatabase()
@@ -20,7 +22,7 @@ func GetCategory(c echo.Context) error {
 	id := c.Param("id")
 	db := databases.GetDatabase()
 	var category models.Category
-	db.First(&category, "ID = ?", id)
+	db.First(&category, idQuery, id)
 	return c.JSON(http.StatusOK, category)
 }
 
@@ -39,7 +41,7 @@ func UpdateCategory(c echo.Context) error {
 	c.Bind(category)
 	db := databases.GetDatabase()
 	var oldCategory models.Category
-	db.First(&oldCategory, "ID = ?", id)
+	db.First(&oldCategory, idQuery, id)
 	oldCategory.Name = category.Name
 	db.Save(&oldCategory)
 	return c.JSON(http.StatusOK, oldCategory)
@@ -50,6 +52,6 @@ func DeleteCategory(c echo.Context) error {
 	id := c.Param("id")
 	db := databases.GetDatabase()
 	var category models.Category
-	db.Delete(&category, "ID = ?", id)
+	db.Delete(&category, idQuery, id)
 	return c.JSON(http.StatusOK, category)
 }

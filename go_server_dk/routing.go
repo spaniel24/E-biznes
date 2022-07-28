@@ -6,6 +6,9 @@ import (
 	"go_server_dk/api"
 )
 
+var productsRoute = "/products"
+var categoriesRoute = "/categories"
+
 func initRouting() *echo.Echo {
 	e := echo.New()
 
@@ -14,17 +17,17 @@ func initRouting() *echo.Echo {
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
 	}))
 
-	e.GET("/products", api.GetProducts)
+	e.GET(productsRoute, api.GetProducts)
 	e.GET("/products/:id", api.GetProduct)
-	e.POST("/products", api.AddProduct)
+	e.POST(productsRoute, api.AddProduct)
 	e.PUT("/products/:id", api.UpdateProduct)
-	e.DELETE("/products", api.DeleteProduct)
+	e.DELETE(productsRoute, api.DeleteProduct)
 
-	e.GET("/categories", api.GetCategories)
+	e.GET(categoriesRoute, api.GetCategories)
 	e.GET("/categories/:id", api.GetCategory)
-	e.POST("/categories", api.AddCategory)
+	e.POST(categoriesRoute, api.AddCategory)
 	e.PUT("/categories/:id", api.UpdateCategory)
-	e.DELETE("/categories", api.DeleteCategory)
+	e.DELETE(categoriesRoute, api.DeleteCategory)
 
 	e.POST("/payments", api.PayForOrder)
 

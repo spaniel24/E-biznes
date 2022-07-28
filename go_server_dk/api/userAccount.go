@@ -17,6 +17,10 @@ import (
 	"os"
 )
 
+var usernameQuery = "username = ?"
+var usernameQueryCapital = "Username = ?"
+var redirectToFront = "https://shopworking.azurewebsites.net?user_token="
+
 func OauthConfigGoogle() *oauth2.Config {
 
 	//Provide default configuration for oauth provider
@@ -119,7 +123,7 @@ func Logout(c echo.Context) error {
 	username := c.Param("username")
 	db := databases.GetDatabase()
 	var user models.User
-	db.Find(&user, "Username = ?", username)
+	db.Find(&user, usernameQueryCapital, username)
 	user.OauthKey = ""
 	user.UserKey = ""
 	db.Save(&user)
@@ -131,7 +135,7 @@ func UserInDatabase(Username string) bool {
 	//Obtain current database connection and fetch user by username
 	db := databases.GetDatabase()
 	user := models.User{}
-	db.Where("username = ?", Username).Find(&user)
+	db.Where(usernameQuery, Username).Find(&user)
 
 	//User exists if object returned from DB does not contain empty fields
 	return user.Username != ""
@@ -209,7 +213,7 @@ func OauthCallbackGithub(c echo.Context) error {
 
 		//If user exists refresh access token
 		user := models.User{}
-		db.Where("Username = ?", userDataStruct.Login).Find(&user)
+		db.Where(usernameQueryCapital, userDataStruct.Login).Find(&user)
 
 		user.OauthKey = oauthToken.AccessToken
 		user.UserKey = userToken.String()
@@ -218,7 +222,7 @@ func OauthCallbackGithub(c echo.Context) error {
 	}
 
 	//Redirect the user to the home page with acces token as query param
-	return c.Redirect(http.StatusFound, "https://shopworking.azurewebsites.net?user_token="+userToken.String())
+	return c.Redirect(http.StatusFound, redirectToFront+userToken.String())
 }
 
 func OauthCallbackFacebook(c echo.Context) error {
@@ -267,7 +271,7 @@ func OauthCallbackFacebook(c echo.Context) error {
 
 		//If user exists refresh access token
 		user := models.User{}
-		db.Where("username = ?", userDataStruct.Name).Find(&user)
+		db.Where(usernameQuery, userDataStruct.Name).Find(&user)
 
 		user.OauthKey = oauthToken.AccessToken
 		user.UserKey = userToken.String()
@@ -275,7 +279,7 @@ func OauthCallbackFacebook(c echo.Context) error {
 		db.Save(&user)
 	}
 
-	return c.Redirect(http.StatusFound, "https://shopworking.azurewebsites.net?user_token="+userToken.String())
+	return c.Redirect(http.StatusFound, redirectToFront+userToken.String())
 }
 
 func OauthCallbackGoogle(c echo.Context) error {
@@ -323,7 +327,7 @@ func OauthCallbackGoogle(c echo.Context) error {
 
 		//If user exists refresh access token
 		user := models.User{}
-		db.Where("username = ?", userDataStruct.Email).Find(&user)
+		db.Where(usernameQuery, userDataStruct.Email).Find(&user)
 
 		user.OauthKey = oauthToken.AccessToken
 		user.UserKey = userToken.String()
@@ -331,7 +335,7 @@ func OauthCallbackGoogle(c echo.Context) error {
 		db.Save(&user)
 	}
 
-	return c.Redirect(http.StatusFound, "https://shopworking.azurewebsites.net?user_token="+userToken.String())
+	return c.Redirect(http.StatusFound, redirectToFront+userToken.String())
 }
 
 func OauthCallbackLinkedin(c echo.Context) error {
@@ -380,7 +384,7 @@ func OauthCallbackLinkedin(c echo.Context) error {
 
 		//If user exists refresh access token
 		user := models.User{}
-		db.Where("username = ?", userDataStruct.Id).Find(&user)
+		db.Where(usernameQuery, userDataStruct.Id).Find(&user)
 
 		user.OauthKey = oauthToken.AccessToken
 		user.UserKey = userToken.String()
@@ -388,5 +392,5 @@ func OauthCallbackLinkedin(c echo.Context) error {
 		db.Save(&user)
 	}
 
-	return c.Redirect(http.StatusFound, "https://shopworking.azurewebsites.net?user_token="+userToken.String())
+	return c.Redirect(http.StatusFound, redirectToFront+userToken.String())
 }
